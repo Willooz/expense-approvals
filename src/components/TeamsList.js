@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 import List from "./List";
 
@@ -16,7 +16,14 @@ const TeamsList = () => {
     fetchTeams();
   }, []);
 
-  return <List listItems={teamsList} />;
+  return (
+    <Fragment>
+      <h2 className="text-2xl mb-4 font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+        Teams
+      </h2>
+      <List listItems={teamsList} />
+    </Fragment>
+  );
 };
 
 export default TeamsList;

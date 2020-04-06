@@ -13,6 +13,11 @@ describe("TeamsList component", () => {
     jest.restoreAllMocks();
   });
 
+  it("Should display a title", () => {
+    const { queryByText } = render(<TeamsList />);
+    expect(queryByText("Teams")).toBeTruthy();
+  });
+
   it("Should fetch teams on mount", () => {
     render(<TeamsList />);
     expect(fetchTeams).toHaveBeenCalledWith(expect.stringContaining("/teams"));
