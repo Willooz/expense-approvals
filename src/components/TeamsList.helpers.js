@@ -4,7 +4,7 @@ export const addUsernamesToTeams = (teamsList, usersList) =>
     name,
     items: users.reduce((teamUsers, userId) => {
       const teamUser = usersList.find((user) => user.id === userId);
-      if (teamUser && teamUser.first_name) {
+      if (teamUsers.length < 3 && teamUser && teamUser.first_name) {
         teamUsers = [...teamUsers, teamUser.first_name];
       }
       return teamUsers;
