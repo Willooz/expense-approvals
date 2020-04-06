@@ -1,9 +1,9 @@
 import React from "react";
 
 const List = ({ listItems }) => (
-  <ul>
+  <ul data-testid="list">
     {listItems.map(({ id, name }) => (
-      <li key={id} data-testid="list-item">
+      <li key={`${id}-${name}`} data-testid="list-item">
         <span>{name}</span>
       </li>
     ))}
