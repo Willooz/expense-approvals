@@ -1,8 +1,8 @@
-import { addUsernamesToTeams } from "./TeamsList.helpers";
+import { addApproversAndUsersToTeams } from "./TeamsList.helpers";
 
 describe("TeamsList helpers", () => {
-  describe("addUsernamesToTeams", () => {
-    it("Should return an array of teams with user firstnames as items", () => {
+  describe("addApproversAndUsersToTeams", () => {
+    it("Should return an array of teams with approvers and users", () => {
       const teamsList = [
         { id: "TEAM1", name: "Marketing", users: ["USR1", "USR3"] },
         { id: "TEAM2", name: "Product", users: ["USR2", "USR3", "USR5"] },
@@ -14,9 +14,23 @@ describe("TeamsList helpers", () => {
         { id: "USR4", first_name: "Sandra", last_name: "Reed" },
         { id: "USR5", first_name: "Jason", last_name: "Casey" },
       ];
-      expect(addUsernamesToTeams(teamsList, usersList)).toEqual([
-        { id: "TEAM1", items: ["Eugene", "Tiffany"], name: "Marketing" },
-        { id: "TEAM2", items: ["Ralph", "Tiffany", "Jason"], name: "Product" },
+      expect(addApproversAndUsersToTeams(teamsList, usersList)).toEqual([
+        {
+          id: "TEAM1",
+          elements: [
+            { name: "Approvers", subElements: ["Sophie", "Lucy", "Sarah"] },
+            { name: "Users", subElements: ["Eugene", "Tiffany"] },
+          ],
+          name: "Marketing",
+        },
+        {
+          id: "TEAM2",
+          elements: [
+            { name: "Approvers", subElements: [] },
+            { name: "Users", subElements: ["Ralph", "Tiffany", "Jason"] },
+          ],
+          name: "Product",
+        },
       ]);
     });
 
@@ -28,12 +42,19 @@ describe("TeamsList helpers", () => {
         { id: "USR1", first_name: "Eugene", last_name: "Tran" },
         { id: "USR2" },
       ];
-      expect(addUsernamesToTeams(teamsList, usersList)).toEqual([
-        { id: "TEAM1", items: ["Eugene"], name: "Marketing" },
+      expect(addApproversAndUsersToTeams(teamsList, usersList)).toEqual([
+        {
+          id: "TEAM1",
+          elements: [
+            { name: "Approvers", subElements: ["Sophie", "Lucy", "Sarah"] },
+            { name: "Users", subElements: ["Eugene"] },
+          ],
+          name: "Marketing",
+        },
       ]);
     });
 
-    it("Should return teams with 3 users max", () => {
+    it("Should return teams with 3 approvers and 3 users max", () => {
       const teamsList = [
         {
           id: "TEAM1",
@@ -47,10 +68,13 @@ describe("TeamsList helpers", () => {
         { id: "USR3", first_name: "Tiffany", last_name: "Frazier" },
         { id: "USR4", first_name: "Sandra", last_name: "Reed" },
       ];
-      expect(addUsernamesToTeams(teamsList, usersList)).toEqual([
+      expect(addApproversAndUsersToTeams(teamsList, usersList)).toEqual([
         {
           id: "TEAM1",
-          items: ["Eugene", "Ralph", "Tiffany"],
+          elements: [
+            { name: "Approvers", subElements: ["Sophie", "Lucy", "Sarah"] },
+            { name: "Users", subElements: ["Eugene", "Ralph", "Tiffany"] },
+          ],
           name: "Marketing",
         },
       ]);

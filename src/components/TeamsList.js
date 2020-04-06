@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 import List from "./List";
-import { addUsernamesToTeams } from "./TeamsList.helpers";
+import { addApproversAndUsersToTeams } from "./TeamsList.helpers";
 
 const TeamsList = () => {
   const [teamsList, setTeamsList] = useState([]);
@@ -22,7 +22,7 @@ const TeamsList = () => {
     fetchData();
   }, []);
 
-  const listItems = addUsernamesToTeams(teamsList, usersList);
+  const listItems = addApproversAndUsersToTeams(teamsList, usersList);
 
   return (
     <Fragment>
