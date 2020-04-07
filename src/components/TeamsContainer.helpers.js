@@ -1,12 +1,8 @@
-const TEAM_APPROVERS = {
-  TEAM1: ["Sophie", "Lucy", "Sarah", "Thomas"],
-};
-
-export const addApproversAndUsersToTeams = (teamsList, usersList) =>
+export const addApprovalsAndUsersToTeams = (teamsList, usersList, approvals) =>
   teamsList.map(({ id, name, users }) => ({
     id,
     name,
-    approvers: (TEAM_APPROVERS[id] || []).slice(0, 3),
+    approvals: approvals[id] || [],
     users: users.reduce((teamUsers, userId) => {
       const teamUser = usersList.find((user) => user.id === userId);
       if (teamUsers.length < 3 && teamUser && teamUser.first_name) {

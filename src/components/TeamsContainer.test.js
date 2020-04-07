@@ -23,8 +23,8 @@ describe("TeamsContainer component", () => {
     expect(fetchTeams).toHaveBeenCalledWith(expect.stringContaining("/teams"));
   });
 
-  it("Should render a List", () => {
+  it("Should render a TeamsList", () => {
     const { queryByTestId } = render(<TeamsContainer />);
-    expect(queryByTestId("list")).toBeTruthy();
+    expect(queryByTestId("teams-list")).toBeTruthy();
   });
 });
