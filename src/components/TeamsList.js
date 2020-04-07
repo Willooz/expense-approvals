@@ -1,37 +1,40 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React from "react";
 
-import List from "./List";
-import { addApproversAndUsersToTeams } from "./TeamsList.helpers";
-
-const TeamsList = () => {
-  const [teamsList, setTeamsList] = useState([]);
-  const [usersList, setUsersList] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const responses = await Promise.all([
-        fetch(`${process.env.REACT_APP_API_BASE_URL}/teams`),
-        fetch(`${process.env.REACT_APP_API_BASE_URL}/users`),
-      ]);
-      const [teams, users] = await Promise.all(
-        responses.map((response) => response.json())
+const TeamsList = ({ listItems, select }) => (
+  <ul
+    data-testid="list"
+    className="px-4 py-2 bg-white shadow overflow-hidden rounded-lg"
+  >
+    {listItems.map((listItem) => {
+      const { id, name, approvers = [], users = [] } = listItem;
+      return (
+        <li
+          key={`${id}-${name}`}
+          data-testid="list-item"
+          className="py-3 border-solid border-b last:border-b-0 border-b-gray-400"
+        >
+          <div>{name}</div>
+          {approvers.length > 0 && (
+            <div className="inline-block mr-4 text-gray-500">
+              <span className="font-semibold">Approvers:</span>{" "}
+              {approvers.join(", ")}
+            </div>
+          )}
+          {users.length > 0 && (
+            <div className="inline-block mr-4 text-gray-500">
+              <span className="font-semibold">Users:</span> {users.join(", ")}
+            </div>
+          )}
+          <button
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700 transition duration-150 ease-in-out"
+            onClick={() => select(listItem)}
+          >
+            View
+          </button>
+        </li>
       );
-      setTeamsList(teams);
-      setUsersList(users);
-    };
-    fetchData();
-  }, []);
-
-  const listItems = addApproversAndUsersToTeams(teamsList, usersList);
-
-  return (
-    <Fragment>
-      <h2 className="text-2xl mb-4 font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
-        Teams
-      </h2>
-      <List listItems={listItems} />
-    </Fragment>
-  );
-};
+    })}
+  </ul>
+);
 
 export default TeamsList;

@@ -1,6 +1,6 @@
-import { addApproversAndUsersToTeams } from "./TeamsList.helpers";
+import { addApproversAndUsersToTeams } from "./TeamsContainer.helpers";
 
-describe("TeamsList helpers", () => {
+describe("TeamsContainer helpers", () => {
   describe("addApproversAndUsersToTeams", () => {
     it("Should return an array of teams with approvers and users", () => {
       const teamsList = [
@@ -17,18 +17,14 @@ describe("TeamsList helpers", () => {
       expect(addApproversAndUsersToTeams(teamsList, usersList)).toEqual([
         {
           id: "TEAM1",
-          elements: [
-            { name: "Approvers", subElements: ["Sophie", "Lucy", "Sarah"] },
-            { name: "Users", subElements: ["Eugene", "Tiffany"] },
-          ],
+          approvers: ["Sophie", "Lucy", "Sarah"],
+          users: ["Eugene", "Tiffany"],
           name: "Marketing",
         },
         {
           id: "TEAM2",
-          elements: [
-            { name: "Approvers", subElements: [] },
-            { name: "Users", subElements: ["Ralph", "Tiffany", "Jason"] },
-          ],
+          approvers: [],
+          users: ["Ralph", "Tiffany", "Jason"],
           name: "Product",
         },
       ]);
@@ -45,10 +41,8 @@ describe("TeamsList helpers", () => {
       expect(addApproversAndUsersToTeams(teamsList, usersList)).toEqual([
         {
           id: "TEAM1",
-          elements: [
-            { name: "Approvers", subElements: ["Sophie", "Lucy", "Sarah"] },
-            { name: "Users", subElements: ["Eugene"] },
-          ],
+          approvers: ["Sophie", "Lucy", "Sarah"],
+          users: ["Eugene"],
           name: "Marketing",
         },
       ]);
@@ -71,10 +65,8 @@ describe("TeamsList helpers", () => {
       expect(addApproversAndUsersToTeams(teamsList, usersList)).toEqual([
         {
           id: "TEAM1",
-          elements: [
-            { name: "Approvers", subElements: ["Sophie", "Lucy", "Sarah"] },
-            { name: "Users", subElements: ["Eugene", "Ralph", "Tiffany"] },
-          ],
+          approvers: ["Sophie", "Lucy", "Sarah"],
+          users: ["Eugene", "Ralph", "Tiffany"],
           name: "Marketing",
         },
       ]);
