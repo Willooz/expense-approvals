@@ -1,6 +1,6 @@
 import React from "react";
 
-import TeamsList from "./components/TeamsList";
+import TeamsContainer from "./components/TeamsContainer";
 import "./App.css";
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
       </nav>
       <main className="flex-1 p-4 bg-gray-100">
         <div className="container mx-auto">
-          <TeamsList />
+          <TeamsContainer />
         </div>
       </main>
     </div>
