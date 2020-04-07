@@ -9,18 +9,47 @@ const TeamView = ({ team, close }) => (
     <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
       <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
         <div className="sm:flex sm:items-start">
-          <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+          <div className="w-full text-center sm:mt-0 sm:ml-4 sm:text-left">
             <h3 className="text-lg leading-6 font-medium text-gray-900">
               {team.name}
             </h3>
             <ul className="mt-2">
-              {team.approvers.map((approver) => (
-                <li key={approver} className="text-sm leading-5 text-gray-500">
-                  <div className="flex items-center justify-between h-10">
-                    {approver}
-                  </div>
-                </li>
-              ))}
+              {team.approvals.map((approval, index, approvals) => {
+                const isTopApproval = approval.level < 0;
+                const minLevel = Math.min(
+                  ...approvals.map((a) => a.level).filter((a) => a > 0)
+                );
+                const maxLevel = Math.max(...approvals.map((a) => a.level));
+                const previousApproval = approvals[index - 1] || { level: 0 };
+                return (
+                  <li
+                    key={approval.approver}
+                    className="text-sm leading-5 text-gray-500"
+                  >
+                    <div className="flex items-center justify-between h-10">
+                      <div>{approval.approver}</div>
+                      <div>
+                        <span>
+                          {isTopApproval
+                            ? `Above ${maxLevel}`
+                            : approval.level === minLevel
+                            ? `Up to`
+                            : `From ${previousApproval.level} to`}
+                        </span>
+                        {!isTopApproval && (
+                          <input
+                            className="form-input ml-3 px-3 py-1 rounded-md shadow-sm border border-gray-400"
+                            style={{ width: 100 }}
+                            type="number"
+                            value={approval.level}
+                            onChange={() => {}}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>

@@ -2,11 +2,19 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import TeamsList from "./TeamsList";
 import TeamView from "./TeamView";
-import { addApproversAndUsersToTeams } from "./TeamsContainer.helpers";
+import { addApprovalsAndUsersToTeams } from "./TeamsContainer.helpers";
 
 const TeamsContainer = () => {
   const [teamsList, setTeamsList] = useState([]);
   const [usersList, setUsersList] = useState([]);
+  const [approvals] = useState({
+    TEAM1: [
+      { level: 500, approver: "Sophie" },
+      { level: 1000, approver: "Lucy" },
+      { level: 5000, approver: "Sarah" },
+      { level: -1, approver: "Thomas" },
+    ],
+  });
   const [currentTeam, setCurrentTeam] = useState(null);
 
   useEffect(() => {
@@ -24,7 +32,11 @@ const TeamsContainer = () => {
     fetchData();
   }, []);
 
-  const listItems = addApproversAndUsersToTeams(teamsList, usersList);
+  const listItems = addApprovalsAndUsersToTeams(
+    teamsList,
+    usersList,
+    approvals
+  );
 
   return (
     <Fragment>
